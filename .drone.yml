@@ -31,6 +31,12 @@ steps:
         - org.opencontainers.image.source=https://github.com/davralin/vdirsyncer
         - org.opencontainers.image.url=https://github.com/davralin/vdirsyncer
 
+  - name: trivy-scan
+    image: quay.io/sighup/trivy-offline:latest
+    pull: always
+    commands:
+      - trivy --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed --skip-update davralin/vdirsyncer
+
   - name: notify
     image: plugins/matrix
     when:
